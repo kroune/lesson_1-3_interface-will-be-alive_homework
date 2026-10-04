@@ -1,19 +1,167 @@
 "use strict";
 
-// ДЗ 3. Интерактивная коллекция.
-// Выполняйте практические этапы из docs/HOME_WORK.md по порядку.
-// Не пытайтесь написать весь файл за один раз: после каждого этапа проверяйте
-// связанный сценарий в браузере и фиксируйте рабочее состояние коммитом.
+const cards = Array.from(document.querySelectorAll(".collection-card"));
+const detailsPanel = document.getElementById("details-panel");
+const detailsTitle = document.getElementById("details-title");
+const detailsDescription = document.getElementById("details-description");
 
-// Этап 3. Найдите карточки и элементы панели подробностей.
-// Реализуйте одну общую функцию выбора карточки.
+// запоминаем исходные тексты панели, чтобы вернуть их при сбросе
+const defaultTitle = detailsTitle.textContent;
+const defaultDescription = detailsDescription.textContent;
 
-// Этап 4. Найдите кнопки фильтров.
-// Показывайте подходящие карточки, обновляйте активную кнопку и счетчик.
-// Учтите случай, когда новый фильтр скрывает выбранную карточку.
+let selectedCard = null;
 
-// Этап 5. Реализуйте случайный выбор среди видимых карточек.
-// Затем реализуйте полный сброс интерфейса.
+function selectCard(card) {
+  if (selectedCard) {
+    selectedCard.classList.remove("collection-card--selected");
+    selectedCard.setAttribute("aria-pressed", "false");
+  }
 
-// Этап 6. Запускайте подготовленную CSS-анимацию через класс.
-// Не дублируйте оформление в script.js.
+  selectedCard = card;
+  selectedCard.classList.add("collection-card--selected");
+  selectedCard.setAttribute("aria-pressed", "true");
+
+  detailsTitle.textContent = card.dataset.title;
+  detailsDescription.textContent = card.dataset.description;
+
+  // перезапускаем анимацию: убираем класс и добавляем заново
+  detailsPanel.classList.remove("details-panel--pulse");
+  void detailsPanel.offsetWidth;
+  detailsPanel.classList.add("details-panel--pulse");
+
+  updateHistory(card);
+}
+
+cards.forEach((card) => {
+  card.addEventListener("click", () => selectCard(card));
+});
+
+const filterButtons = Array.from(document.querySelectorAll(".filter-button"));
+const visibleCount = document.getElementById("visible-count");
+
+function clearSelection() {
+  if (selectedCard) {
+    selectedCard.classList.remove("collection-card--selected");
+    selectedCard.setAttribute("aria-pressed", "false");
+    selectedCard = null;
+  }
+
+  detailsTitle.textContent = defaultTitle;
+  detailsDescription.textContent = defaultDescription;
+}
+
+function applyFilter(filter) {
+  filterButtons.forEach((button) => {
+    const isActive = button.dataset.filter === filter;
+    button.classList.toggle("filter-button--active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  let visible = 0;
+  cards.forEach((card) => {
+    const isVisible = filter === "all" || card.dataset.category === filter;
+    card.classList.toggle("collection-card--hidden", !isVisible);
+    if (isVisible) {
+      visible += 1;
+    }
+  });
+  visibleCount.textContent = visible;
+
+  // если фильтр скрыл выбранную карточку, выбор сбрасывается
+  if (selectedCard && selectedCard.classList.contains("collection-card--hidden")) {
+    clearSelection();
+  }
+}
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => applyFilter(button.dataset.filter));
+});
+
+const randomButton = document.getElementById("random-button");
+
+function getVisibleCards() {
+  return cards.filter((card) => !card.classList.contains("collection-card--hidden"));
+}
+
+function selectRandomCard() {
+  const visible = getVisibleCards();
+  if (visible.length === 0) {
+    return;
+  }
+
+  // не выбираем текущую карточку повторно, если есть другой вариант
+  let candidates = visible.filter((card) => card !== selectedCard);
+  if (candidates.length === 0) {
+    candidates = visible;
+  }
+
+  const randomIndex = Math.floor(Math.random() * candidates.length);
+  selectCard(candidates[randomIndex]);
+}
+
+randomButton.addEventListener("click", selectRandomCard);
+
+const resetButton = document.getElementById("reset-button");
+
+function resetAll() {
+  applyFilter("all");
+  clearSelection();
+  clearHistory();
+}
+
+resetButton.addEventListener("click", resetAll);
+
+const historyList = document.getElementById("history-list");
+let history = [];
+
+function updateHistory(card) {
+  const title = card.dataset.title;
+
+  // повторный выбор не создает дубль, а поднимает карточку наверх
+  history = history.filter((item) => item !== title);
+  history.unshift(title);
+  if (history.length > 3) {
+    history.length = 3;
+  }
+
+  historyList.innerHTML = "";
+  history.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    historyList.appendChild(li);
+  });
+}
+
+function clearHistory() {
+  history = [];
+  historyList.innerHTML = "";
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    resetAll();
+    return;
+  }
+
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+    return;
+  }
+
+  const visible = getVisibleCards();
+  if (visible.length === 0) {
+    return;
+  }
+
+  event.preventDefault();
+
+  let index = visible.indexOf(selectedCard);
+  if (index === -1) {
+    index = event.key === "ArrowRight" ? 0 : visible.length - 1;
+  } else if (event.key === "ArrowRight") {
+    index = (index + 1) % visible.length;
+  } else {
+    index = (index - 1 + visible.length) % visible.length;
+  }
+
+  selectCard(visible[index]);
+});
