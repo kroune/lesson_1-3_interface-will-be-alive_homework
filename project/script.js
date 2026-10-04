@@ -74,3 +74,27 @@ function applyFilter(filter) {
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => applyFilter(button.dataset.filter));
 });
+
+const randomButton = document.getElementById("random-button");
+
+function getVisibleCards() {
+  return cards.filter((card) => !card.classList.contains("collection-card--hidden"));
+}
+
+function selectRandomCard() {
+  const visible = getVisibleCards();
+  if (visible.length === 0) {
+    return;
+  }
+
+  // не выбираем текущую карточку повторно, если есть другой вариант
+  let candidates = visible.filter((card) => card !== selectedCard);
+  if (candidates.length === 0) {
+    candidates = visible;
+  }
+
+  const randomIndex = Math.floor(Math.random() * candidates.length);
+  selectCard(candidates[randomIndex]);
+}
+
+randomButton.addEventListener("click", selectRandomCard);
