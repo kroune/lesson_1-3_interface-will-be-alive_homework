@@ -28,6 +28,8 @@ function selectCard(card) {
   detailsPanel.classList.remove("details-panel--pulse");
   void detailsPanel.offsetWidth;
   detailsPanel.classList.add("details-panel--pulse");
+
+  updateHistory(card);
 }
 
 cards.forEach((card) => {
@@ -104,6 +106,62 @@ const resetButton = document.getElementById("reset-button");
 function resetAll() {
   applyFilter("all");
   clearSelection();
+  clearHistory();
 }
 
 resetButton.addEventListener("click", resetAll);
+
+const historyList = document.getElementById("history-list");
+let history = [];
+
+function updateHistory(card) {
+  const title = card.dataset.title;
+
+  // повторный выбор не создает дубль, а поднимает карточку наверх
+  history = history.filter((item) => item !== title);
+  history.unshift(title);
+  if (history.length > 3) {
+    history.length = 3;
+  }
+
+  historyList.innerHTML = "";
+  history.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    historyList.appendChild(li);
+  });
+}
+
+function clearHistory() {
+  history = [];
+  historyList.innerHTML = "";
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    resetAll();
+    return;
+  }
+
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+    return;
+  }
+
+  const visible = getVisibleCards();
+  if (visible.length === 0) {
+    return;
+  }
+
+  event.preventDefault();
+
+  let index = visible.indexOf(selectedCard);
+  if (index === -1) {
+    index = event.key === "ArrowRight" ? 0 : visible.length - 1;
+  } else if (event.key === "ArrowRight") {
+    index = (index + 1) % visible.length;
+  } else {
+    index = (index - 1 + visible.length) % visible.length;
+  }
+
+  selectCard(visible[index]);
+});
