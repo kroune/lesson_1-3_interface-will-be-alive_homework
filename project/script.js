@@ -98,3 +98,12 @@ function selectRandomCard() {
 }
 
 randomButton.addEventListener("click", selectRandomCard);
+
+const resetButton = document.getElementById("reset-button");
+
+function resetAll() {
+  applyFilter("all");
+  clearSelection();
+}
+
+resetButton.addEventListener("click", resetAll);
