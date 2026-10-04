@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Учебный проект: интерактивная коллекция на JavaScript и DOM API."
+      content="Интерактивная коллекция паттернов пользовательских интерфейсов на JavaScript и DOM API."
     />
-    <title>Интерактивная коллекция — ДЗ 3</title>
+    <title>Паттерны пользовательских интерфейсов — ДЗ 3</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
@@ -19,16 +19,17 @@
       </a>
 
       <p class="site-header__course">JavaScript · DOM · события</p>
-      <p class="site-header__status"><span aria-hidden="true"></span> Стартовый проект</p>
+      <p class="site-header__status"><span aria-hidden="true"></span> Интерактивная коллекция</p>
     </header>
 
     <main class="page" id="collection">
       <section class="intro" aria-labelledby="page-title">
-        <p class="intro__eyebrow">Демонстрационная тема</p>
-        <h1 id="page-title">Шесть идей,<br />которые <em>изменили web</em></h1>
+        <p class="intro__eyebrow">Тема 24 · UI patterns</p>
+        <h1 id="page-title">Паттерны<br />пользовательских <em>интерфейсов</em></h1>
         <p class="intro__lead">
-          Выберите карточку, отфильтруйте коллекцию или доверьте выбор случаю.
-          Пока это статичная страница — поведение появится после вашей реализации.
+          Проверенные решения повторяющихся задач интерфейса: навигация,
+          ввод данных и обратная связь. Выберите карточку, отфильтруйте
+          коллекцию по категории или доверьте выбор случаю.
         </p>
       </section>
 
@@ -47,26 +48,26 @@
               <button
                 class="filter-button"
                 type="button"
-                data-filter="foundation"
+                data-filter="navigation"
                 aria-pressed="false"
               >
-                Основа
+                Навигация
               </button>
               <button
                 class="filter-button"
                 type="button"
-                data-filter="interface"
+                data-filter="input"
                 aria-pressed="false"
               >
-                Интерфейс
+                Ввод данных
               </button>
               <button
                 class="filter-button"
                 type="button"
-                data-filter="platform"
+                data-filter="feedback"
                 aria-pressed="false"
               >
-                Платформа
+                Обратная связь
               </button>
             </div>
 
@@ -79,103 +80,103 @@
             <button
               class="collection-card"
               type="button"
-              data-title="HTML"
-              data-description="Язык разметки, который задает смысл и структуру содержимого web-страницы."
-              data-category="foundation"
+              data-title="Хлебные крошки"
+              data-description="Цепочка ссылок, которая показывает положение страницы в структуре сайта и позволяет быстро вернуться на любой уровень выше."
+              data-category="navigation"
               aria-controls="details-panel"
               aria-pressed="false"
             >
               <span class="collection-card__meta">
-                <span>01</span><span>Основа</span>
+                <span>01</span><span>Навигация</span>
               </span>
-              <span class="collection-card__symbol" aria-hidden="true">&lt;/&gt;</span>
-              <span class="collection-card__title">HTML</span>
-              <span class="collection-card__summary">Структура и смысл документа</span>
+              <span class="collection-card__symbol" aria-hidden="true">››</span>
+              <span class="collection-card__title">Хлебные крошки</span>
+              <span class="collection-card__summary">Путь от корня сайта к текущей странице</span>
             </button>
 
             <button
               class="collection-card"
               type="button"
-              data-title="CSS"
-              data-description="Язык стилей, который управляет композицией, оформлением и адаптацией интерфейса."
-              data-category="interface"
+              data-title="Вкладки"
+              data-description="Набор связанных разделов, между которыми пользователь переключается без перезагрузки страницы. Активная вкладка всегда визуально выделена."
+              data-category="navigation"
               aria-controls="details-panel"
               aria-pressed="false"
             >
               <span class="collection-card__meta">
-                <span>02</span><span>Интерфейс</span>
+                <span>02</span><span>Навигация</span>
               </span>
-              <span class="collection-card__symbol" aria-hidden="true">{ }</span>
-              <span class="collection-card__title">CSS</span>
-              <span class="collection-card__summary">Композиция и визуальный язык</span>
+              <span class="collection-card__symbol" aria-hidden="true">▤</span>
+              <span class="collection-card__title">Вкладки</span>
+              <span class="collection-card__summary">Переключение разделов внутри одного экрана</span>
             </button>
 
             <button
               class="collection-card"
               type="button"
-              data-title="JavaScript"
-              data-description="Язык программирования, который добавляет странице состояние и реакцию на действия пользователя."
-              data-category="interface"
+              data-title="Боковое меню"
+              data-description="Панель с основными разделами, которая может сворачиваться в иконки и оставлять больше места содержимому на небольших экранах."
+              data-category="navigation"
               aria-controls="details-panel"
               aria-pressed="false"
             >
               <span class="collection-card__meta">
-                <span>03</span><span>Интерфейс</span>
+                <span>03</span><span>Навигация</span>
               </span>
-              <span class="collection-card__symbol" aria-hidden="true">JS</span>
-              <span class="collection-card__title">JavaScript</span>
-              <span class="collection-card__summary">Поведение и состояние</span>
+              <span class="collection-card__symbol" aria-hidden="true">☰</span>
+              <span class="collection-card__title">Боковое меню</span>
+              <span class="collection-card__summary">Компактная навигация по крупным разделам</span>
             </button>
 
             <button
               class="collection-card"
               type="button"
-              data-title="DOM"
-              data-description="Объектное представление документа, через которое JavaScript читает и изменяет страницу."
-              data-category="foundation"
+              data-title="Автодополнение"
+              data-description="Поле ввода предлагает подходящие варианты уже после первых символов: это ускоряет заполнение формы и снижает число опечаток."
+              data-category="input"
               aria-controls="details-panel"
               aria-pressed="false"
             >
               <span class="collection-card__meta">
-                <span>04</span><span>Основа</span>
+                <span>04</span><span>Ввод данных</span>
               </span>
-              <span class="collection-card__symbol" aria-hidden="true">◇</span>
-              <span class="collection-card__title">DOM</span>
-              <span class="collection-card__summary">Страница как дерево объектов</span>
+              <span class="collection-card__symbol" aria-hidden="true">Aa</span>
+              <span class="collection-card__title">Автодополнение</span>
+              <span class="collection-card__summary">Подсказки по мере ввода текста</span>
             </button>
 
             <button
               class="collection-card"
               type="button"
-              data-title="HTTP"
-              data-description="Протокол обмена данными, который связывает браузер с сервером и другими ресурсами сети."
-              data-category="platform"
+              data-title="Пошаговая форма"
+              data-description="Мастер проводит пользователя через последовательность небольших шагов с индикатором прогресса вместо одной длинной формы."
+              data-category="input"
               aria-controls="details-panel"
               aria-pressed="false"
             >
               <span class="collection-card__meta">
-                <span>05</span><span>Платформа</span>
+                <span>05</span><span>Ввод данных</span>
               </span>
-              <span class="collection-card__symbol" aria-hidden="true">↗</span>
-              <span class="collection-card__title">HTTP</span>
-              <span class="collection-card__summary">Обмен данными в сети</span>
+              <span class="collection-card__symbol" aria-hidden="true">1→2</span>
+              <span class="collection-card__title">Пошаговая форма</span>
+              <span class="collection-card__summary">Сложная форма, разбитая на шаги</span>
             </button>
 
             <button
               class="collection-card"
               type="button"
-              data-title="Web API"
-              data-description="Набор возможностей браузера: события, навигация, мультимедиа, сеть и работа с устройством."
-              data-category="platform"
+              data-title="Всплывающие уведомления"
+              data-description="Короткие сообщения в углу экрана, которые подтверждают результат действия или сообщают об ошибке и исчезают сами."
+              data-category="feedback"
               aria-controls="details-panel"
               aria-pressed="false"
             >
               <span class="collection-card__meta">
-                <span>06</span><span>Платформа</span>
+                <span>06</span><span>Обратная связь</span>
               </span>
-              <span class="collection-card__symbol" aria-hidden="true">＋</span>
-              <span class="collection-card__title">Web API</span>
-              <span class="collection-card__summary">Возможности браузерной среды</span>
+              <span class="collection-card__symbol" aria-hidden="true">✓</span>
+              <span class="collection-card__title">Всплывающие уведомления</span>
+              <span class="collection-card__summary">Подтверждение действий без перезагрузки</span>
             </button>
           </div>
         </div>
@@ -187,17 +188,22 @@
           aria-live="polite"
         >
           <div class="details-panel__top">
-            <span class="details-panel__label">Выбранный элемент</span>
+            <span class="details-panel__label">Выбранный паттерн</span>
             <span class="details-panel__marker" aria-hidden="true"></span>
           </div>
 
           <div class="details-panel__content">
-            <p class="details-panel__number" aria-hidden="true">DETAIL / 01</p>
+            <p class="details-panel__number" aria-hidden="true">DETAIL / —</p>
             <h2 id="details-title">Выберите карточку</h2>
             <p id="details-description">
-              Здесь появится описание выбранного элемента. Используйте данные из
-              атрибутов карточки, не дублируйте тексты в JavaScript.
+              Здесь появится описание выбранного паттерна. Нажмите на любую
+              карточку из коллекции слева.
             </p>
+          </div>
+
+          <div class="details-panel__history">
+            <p class="details-panel__history-title">Недавний выбор</p>
+            <ul class="details-panel__history-list" id="history-list"></ul>
           </div>
 
           <div class="details-panel__actions">
@@ -210,12 +216,12 @@
       </section>
 
       <section class="assignment-note" aria-labelledby="assignment-title">
-        <p class="assignment-note__index">HOMEWORK / 03</p>
+        <p class="assignment-note__index">UI PATTERNS / 24</p>
         <div>
-          <h2 id="assignment-title">Ваш код должен выдерживать сочетание сценариев.</h2>
+          <h2 id="assignment-title">Паттерн — это проверенное решение повторяющейся задачи.</h2>
           <p>
-            Проверьте не только каждый клик отдельно, но и последовательности:
-            выбор → фильтр → случайный выбор → сброс.
+            Управлять коллекцией можно и с клавиатуры: стрелки ← и → переключают
+            видимые карточки, клавиша Esc сбрасывает страницу в исходное состояние.
           </p>
         </div>
       </section>
